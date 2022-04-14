@@ -41,13 +41,10 @@ else:
         except Exception as e:
             # Fallback to ENV_PATH
             print("WARNING: getEnvVersion() failed, falling back to ENV_PATH")
-            envPath = os.path.abspath(os.environ.get('ENV_PATH'))
+            envPath = os.path.abspath(os.environ.get('ENV_PATH', ""))
 
-        print("abs: %s" % os.path.abspath(os.path.join(envPath, "gppy", "tools", "sec")))
-        sys.path.append(os.path.join(envPath, "gppy", "tools", "sec"))
-
-from aes_mmo import aes_mmo_hash
-from x25519 import x25519_sign_and_return_response
+        sec_deps_path = os.path.join(envPath, "gppy", "tools", "sec")
+        sys.path.append(sec_deps_path)
 
 
 # CONSTANTS
@@ -106,7 +103,7 @@ def split_binary(args):
         with open(args.jumptableFile, 'wb') as fw:
             # section1 starts after the userlicense, compensate for in offset calculation
             section1_user_license_skip_length = 0x100
-            start_offset = args.section1_addr - int(args.license_offset,16) - section1_user_license_skip_length
+            start_offset = args.section1_addr - int(args.license_offset, 16) - section1_user_license_skip_length
             jumptables_start_offset = 0x800 - start_offset
             fw.write(args.hexdata[jumptables_start_offset:jumptables_start_offset + args.section2_size])
         logging.info("Written jumptables to %s" % args.jumptableFile)
@@ -258,6 +255,9 @@ def add_signature(args):
     add_signature adds a signature over a specified image to the specified Intel HEX file object.
     """
     if args.x25519:
+        from aes_mmo import aes_mmo_hash
+        from x25519 import x25519_sign_and_return_response
+
         aes_mmo_hash_buf = bytearray(image)
 
         print("AES-MMO hashing %d bytes total" % len(aes_mmo_hash_buf))
@@ -399,23 +399,22 @@ def parse_command_line_arguments():
     return args
 
 
-
 def lzma_compress(input_file, output_file):
     """ compress with lzma and add a header containing the uncompressed size """
 
     dictionarySize = 1 << 16
-    lc = 3 # -lc3 : set number of literal context bits : [0, 8] : default = 3
-    lp = 0 # -lp0 : set number of literal pos bits : [0, 4] : default = 0
-    pb = 2 # -pb2 : set number of pos bits : [0, 4] : default = 2
+    lc = 3  # -lc3 : set number of literal context bits : [0, 8] : default = 3
+    lp = 0  # -lp0 : set number of literal pos bits : [0, 4] : default = 0
+    pb = 2  # -pb2 : set number of pos bits : [0, 4] : default = 2
 
     ota_filters = [
         {"id": lzma.FILTER_LZMA1,
             "preset": 7 | lzma.PRESET_EXTREME,
             "dict_size": dictionarySize,
-            "lc": 3, #lc: Number of literal context bits.
-            "lp": 0,  #lp: Number of literal position bits. The sum lc + lp must be at most 4.
-            "pb": 2, #pb: Number of position bits; must be at most 4.
-        },
+            "lc": 3,  # lc: Number of literal context bits.
+            "lp": 0,  # lp: Number of literal position bits. The sum lc + lp must be at most 4.
+            "pb": 2,  # pb: Number of position bits; must be at most 4.
+         },
     ]
 
     properties = (pb * 5 + lp) * 9 + lc
@@ -423,23 +422,24 @@ def lzma_compress(input_file, output_file):
 
     compressor = lzma.LZMACompressor(format=lzma.FORMAT_RAW, filters=ota_filters)
     with open(output_file, mode='wb') as output_handle, \
-        open(input_file, 'rb') as input_handle:
+            open(input_file, 'rb') as input_handle:
         input_data = input_handle.read()
         print(f"length input data: {len(input_data):x}")
         header = struct.pack("<BIQ",
-            properties,  #properties
-            dictionarySize, #dictionarySize
-            len(input_data), #decompressedSize
-        )
+                             properties,  # properties
+                             dictionarySize,  # dictionarySize
+                             len(input_data),  # decompressedSize
+                             )
         output_handle.write(header)
         output_handle.write(compressor.compress(input_data))
         output_handle.write(compressor.flush())
+
 
 def pad_bin_file(page_size, input_file: str, output_file: str):
     """ pad the file to a page size multiple by adding 0's """
 
     with open(output_file, mode='wb') as output_handle, \
-        open(input_file, 'rb') as input_handle:
+            open(input_file, 'rb') as input_handle:
         input_data = input_handle.read()
         print(f"length input data: {len(input_data):x}")
         output_handle.write(input_data)
@@ -447,6 +447,7 @@ def pad_bin_file(page_size, input_file: str, output_file: str):
         if bytes_in_incomplete_page != 0:
             padding_size = page_size - bytes_in_incomplete_page
             output_handle.write(b'\x00' * padding_size)
+
 
 def main():
     """

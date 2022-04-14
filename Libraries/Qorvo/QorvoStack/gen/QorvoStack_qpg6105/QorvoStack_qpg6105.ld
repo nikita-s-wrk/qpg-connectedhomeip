@@ -209,7 +209,7 @@ SECTIONS
         libgcc.a ( * )
     }
 
-    .JTOTA eFLASH - 0x65000:
+    .JTOTA eFLASH - 0x61000:
     {
         JTOTA_Start = . ;
         KEEP(*(JTOTA.data));
@@ -225,11 +225,11 @@ SECTIONS
         gpNvm_End = . ;
     } > FLASH
 
-    .OTA eFLASH - 0x64000:
+    .OTA eFLASH - 0x60000:
     {
         OTA_Start = . ;
         KEEP(*(OTA.data));
-        .  = OTA_Start + 0x60000;
+        .  = OTA_Start + 0x5c000;
         OTA_End = . ;
     } > FLASH
 
