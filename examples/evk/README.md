@@ -1,53 +1,55 @@
-# Quickstart Guide Qorvo CHIP Evaluation Kit
+# Quickstart Guide Qorvo Matter Evaluation Kit
 
 # Table of Contents
-* [Overview](#overview)
-* [Required hardware](#required-hardware)
-	* [Computer and QPG6105 DK board setup](#computer-and-qpg6105-dk-board-setup)
-	* [Install the Android™ CHIPTool application](#install-the-android-chiptool-application)
-* [QPG7015M Border Router setup](#qpg7015m-border-router-setup)
-	* [Connect Android mobile device to the Wi-Fi access point](#connect-android-mobile-device-to-the-wi-fi-access-point)
-	* [Form a new Thread network](#form-a-new-thread-network)
-* [Provision the QPG6105 DK board using CHIPTool](#provision-the-qpg6105-dk-board-using-chiptool)
-	* [Open CHIPTool on the Android Smartphone.](#open-chiptool-on-the-android-smartphone.)
-	* [Retrieve the QR code URL](#retrieve-the-qr-code-url)
-	* [Display the QR code](#display-the-qr-code)
-	* [Scan the QR code](#scan-the-qr-code)
-	* [Operate the light](#operate-the-light)
-* [Shutting down the Raspberry Pi](#shutting-down-the-raspberry-pi)
-* [Factory Reset](#factory-reset)
-	* [QPG6105 DK board factory reset](#qpg6105-dk-board-factory-reset)
-	* [QPG7015M development kit](#qpg7015m-development-kit)
-* [Building from source](#building-from-source)
-* [Important Notices](#important-notices)
+- [Quickstart Guide Qorvo Matter Evaluation Kit](#quickstart-guide-qorvo-matter-evaluation-kit)
+- [Table of Contents](#table-of-contents)
+	- [Overview](#overview)
+	- [Required hardware](#required-hardware)
+		- [Computer and QPG6105 DK board setup](#computer-and-qpg6105-dk-board-setup)
+		- [Install the Android™ CHIPTool application](#install-the-android-chiptool-application)
+	- [QPG7015M Border Router setup](#qpg7015m-border-router-setup)
+		- [Connect Android mobile device to the Wi-Fi access point](#connect-android-mobile-device-to-the-wi-fi-access-point)
+		- [Form a new Thread network](#form-a-new-thread-network)
+	- [Provision the QPG6105 DK board using CHIPTool](#provision-the-qpg6105-dk-board-using-chiptool)
+		- [Open CHIPTool on the Android Smartphone.](#open-chiptool-on-the-android-smartphone)
+		- [Retrieve the QR code URL](#retrieve-the-qr-code-url)
+		- [Display the QR code](#display-the-qr-code)
+		- [Scan the QR code](#scan-the-qr-code)
+		- [Operate the light](#operate-the-light)
+	- [Shutting down the Raspberry Pi](#shutting-down-the-raspberry-pi)
+	- [Factory Reset](#factory-reset)
+		- [QPG6105 DK board factory reset](#qpg6105-dk-board-factory-reset)
+		- [QPG7015M development kit](#qpg7015m-development-kit)
+	- [Building from source](#building-from-source)
+	- [Important Notices](#important-notices)
 
 
 
 ## Overview
 
-The CHIP Evaluation Kit contains the following hardware:
+The Matter Evaluation Kit contains the following hardware:
 
 * Raspberry Pi 4 with QPG7015M daughter board add-on
 * Micro SD card containing Linux OS, drivers and programmed with a Thread Border Router application
 * Raspberry Pi USB-C power supply
-* QPG6105 DK board, flashed with a CHIP Light application.
+* QPG6105 DK board, flashed with a Matter Light application.
 * QR code pointing to the quickstart guide
 
-This Evaluation kit will allow you to control a CHIP Light device implemented
+This Evaluation kit will allow you to control a Matter Light device implemented
 on the QPG6105 DK board using a WiFi connected Android™ device via the QPG7015M
 DK that implements a Thread Border Router:
 
 1. The Smartphone scans the Light device's QR code
 2. A secure Bluetooth Low Energy connection is setup using the QR code information
 3. Thread network credentials are passed to the QPG6105 Light device
-4. The CHIP Light device joins the Thread network
+4. The Matter Light device joins the Thread network
 5. The Smartphone can now communicate via IP over the QPG7015M based Wi-Fi-Thread router, the Light can be controlled by the Smartphone
 
-![Qorvo CHIP demo](./imgs/chip_demo.png "Qorvo CHIP demo")
+![Qorvo Matter demo](./imgs/chip_demo.png "Qorvo Matter demo")
 
 ## Required hardware
 
-Next to the CHIP Evaluation Kit, the user has to obtain the following items:
+Next to the Matter Evaluation Kit, the user has to obtain the following items:
 
 * An Android device to run the CHIPTool Smartphone Application.
 * A personal computer (Windows/Linux/Mac) with PuTTY (or an equivalent serial terminal tool) installed and a free USB port.
@@ -58,7 +60,7 @@ Use the supplied USB cable to connect the QPG6105DK board's USB-C connector (mar
 
 ![Power QPG6105 DK](./imgs/qpg6105_power.png "Power QPG6105 DK")
 
-When the QPG6105DK board is connected to a computer, it will appear as a USB serial port device. The Light application will
+When the QPG6105DK board is connected to a comp appear as a USB serial port device. The Light application will
 send logging messages to this serial port.
 
 To inspect the serial logging of the Light Application running on the QPG6105,
@@ -148,13 +150,13 @@ Open a web browser and navigate to the URL by pasting it in the address bar.  Th
 
 ### Scan the QR code
 
-In CHIPTool, tap “Provision CHIP device with Thread” and scan the QR code displayed in your web browser.
+In CHIPTool, tap “Provision Matter device with Thread” and scan the QR code displayed in your web browser.
 
 If the device does not connect, press the reset button again on the QPG6105DK board.
 
 The network should appear, click "save network".
 
-![Provision CHIP](./imgs/chiptool-provisioning.png "Provision CHIPTool")
+![Provision Matter](./imgs/chiptool-provisioning.png "Provision CHIPTool")
 
 The message "provisioning completed" appears, and a slider and on/off controls are shown.
 
@@ -209,4 +211,4 @@ The QPG7015M based border router build documentation can be found [in the Qorvo 
 
 ## Important Notices
 
-This repository contains the specific files needed to enable CHIP on Qorvo platforms. Source code in this repository is covered by the license agreement in [Qorvo_EULA.txt](../../Qorvo_EULA.txt).
+This repository contains the specific files needed to enable Matter on Qorvo platforms. Source code in this repository is covered by the license agreement in [Qorvo_EULA.txt](../../Qorvo_EULA.txt).

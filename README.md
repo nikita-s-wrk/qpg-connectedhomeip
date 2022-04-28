@@ -1,9 +1,9 @@
-# QPGxxxx Connected Home over IP SDKs
+# Qorvo QPG Matter SDKs
 
-This repository contains the specific files needed to enable CHIP on Qorvo platforms.
+This repository contains the specific files needed to enable Matter on Qorvo platforms.
 Source code in this repository is covered by the license agreement in [Qorvo_EULA.txt](Qorvo_EULA.txt).
 
-Example applications on the different platforms are available in the CHIP repository,
+Example applications on the different platforms are available in the Matter repository,
 which can be found under:
 
 [https://github.com/project-chip/connectedhomeip](https://github.com/project-chip/connectedhomeip)
@@ -12,7 +12,7 @@ which can be found under:
 
 * QPG6105
 
-CHIP examples are available for the QPG6105 Development Kit board.
+Matter examples are available for the QPG6105 Development Kit board.
 All files required are stored in this repository under
 
 ```
